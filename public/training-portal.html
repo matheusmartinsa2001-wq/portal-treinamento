@@ -6,562 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ITSM Trainer · Samsung</title>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-  <style>
-    :root,
-    [data-theme="light"] {
-      --text-xs: clamp(.75rem, .7rem + .25vw, .875rem);
-      --text-sm: clamp(.875rem, .8rem + .35vw, 1rem);
-      --text-base: clamp(1rem, .95rem + .25vw, 1.125rem);
-      --text-lg: clamp(1.125rem, 1rem + .75vw, 1.45rem);
-      --text-xl: clamp(1.65rem, 1.2rem + 1.5vw, 2.4rem);
-      --space-2: .5rem;
-      --space-3: .75rem;
-      --space-4: 1rem;
-      --space-5: 1.25rem;
-      --space-6: 1.5rem;
-      --space-8: 2rem;
-      --space-12: 3rem;
-      --color-bg: #f0f4fb;
-      --color-surface: #ffffff;
-      --color-surface-2: #e8eef8;
-      --color-border: #c5d3e8;
-      --color-divider: #d0dcea;
-      --color-text: #0d1a2e;
-      --color-text-muted: #4a6080;
-      --color-text-inverse: #ffffff;
-      --color-primary: #0066cc;
-      --color-primary-hover: #004a99;
-      --color-success: #1a7f3c;
-      --color-error: #c0392b;
-      --radius-md: .5rem;
-      --radius-lg: .75rem;
-      --radius-xl: 1rem;
-      --shadow-sm: 0 1px 2px rgba(30, 30, 20, .06);
-      --shadow-md: 0 8px 24px rgba(30, 30, 20, .08);
-      --font-body: 'Satoshi', 'Segoe UI', sans-serif
-    }
-
-    [data-theme="dark"] {
-      --color-bg: #0a0f1e;
-      --color-surface: #0d1529;
-      --color-surface-2: #111d35;
-      --color-border: #1e3a5f;
-      --color-divider: #1a3050;
-      --color-text: #d6e4f7;
-      --color-text-muted: #7a9cc0;
-      --color-text-inverse: #0a0f1e;
-      --color-primary: #3399ff;
-      --color-primary-hover: #1a80f0;
-      --color-success: #4caf50;
-      --color-error: #ef5350;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, .22);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, .28)
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    html,
-    body {
-      margin: 0;
-      height: 100%
-    }
-
-    body {
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      background: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.6
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-      color: inherit
-    }
-
-    button {
-      cursor: pointer
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse
-    }
-
-    .hidden {
-      display: none !important
-    }
-
-    .skip-link {
-      position: absolute;
-      left: -9999px
-    }
-
-    .skip-link:focus {
-      left: 1rem;
-      top: 1rem;
-      background: var(--color-primary);
-      color: var(--color-text-inverse);
-      padding: .75rem 1rem;
-      border-radius: .5rem;
-      z-index: 99
-    }
-
-    .app-shell {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      grid-template-rows: 72px 1fr;
-      height: 100dvh
-    }
-
-    .sidebar {
-      grid-row: 1/-1;
-      overflow: auto;
-      background: linear-gradient(180deg, #0055b3 0%, #003d8a 100%);
-      border-right: none;
-      padding: var(--space-6) var(--space-4)
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-4) var(--space-6);
-      border-bottom: 3px solid var(--color-primary);
-      background: var(--color-surface);
-      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08)
-    }
-
-    .main {
-      overflow: auto;
-      padding: var(--space-6)
-    }
-
-    .brand {
-      display: flex;
-      gap: var(--space-3);
-      align-items: center;
-      margin-bottom: var(--space-8)
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 24px;
-      background: transparent;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      flex-shrink: 0;
-      overflow: hidden
-    }
-
-    .logo svg {
-      width: 24px;
-      height: 24px
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: var(--text-lg);
-      color: #ffffff
-    }
-
-    .brand p {
-      margin: 0;
-      font-size: var(--text-xs);
-      color: rgba(255, 255, 255, 0.65)
-    }
-
-    .nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: var(--space-2)
-    }
-
-    .nav-btn {
-      width: 100%;
-      text-align: left;
-      min-height: 44px;
-      border: 1px solid transparent;
-      border-radius: var(--radius-lg);
-      padding: var(--space-3) var(--space-4);
-      background: transparent;
-      color: rgba(255, 255, 255, 0.85)
-    }
-
-    .nav-btn.active,
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: rgba(255, 255, 255, 0.3)
-    }
-
-    .meta,
-    .panel,
-    .hero-card,
-    .result-card,
-    .status-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-sm)
-    }
-
-    .meta {
-      margin-top: var(--space-8);
-      padding: var(--space-4);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.15)
-    }
-
-    .meta,
-    .meta p,
-    .meta strong {
-      color: rgba(255, 255, 255, 0.9) !important
-    }
-
-    .meta .chip {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      padding: .2rem .55rem;
-      border-radius: 999px;
-      font-size: var(--text-xs);
-      background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
-      color: var(--color-primary)
-    }
-
-    .top-actions,
-    .toolbar-inline,
-    .training-selector,
-    .filter-row,
-    .subtabs {
-      display: flex;
-      gap: var(--space-3);
-      align-items: center;
-      flex-wrap: wrap
-    }
-
-    .btn {
-      min-height: 44px;
-      padding: 0 var(--space-4);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--color-border);
-      background: var(--color-surface);
-      color: var(--color-text)
-    }
-
-    .btn-primary {
-      background: var(--color-primary);
-      color: #ffffff;
-      border-color: var(--color-primary);
-      font-weight: 600;
-      letter-spacing: .01em
-    }
-
-    .btn-primary:hover {
-      background: var(--color-primary-hover);
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3)
-    }
-
-    .subtab-btn {
-      min-height: 44px;
-      padding: 0 var(--space-4);
-      border-radius: 999px;
-      border: 1px solid var(--color-border);
-      background: var(--color-surface-2);
-      color: var(--color-text)
-    }
-
-    .subtab-btn.active {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-      color: var(--color-text-inverse)
-    }
-
-    .admin-subtab,
-    .cadastro-subtab,
-    .resultado-subtab {
-      display: none
-    }
-
-    .admin-subtab.active,
-    .cadastro-subtab.active,
-    .resultado-subtab.active {
-      display: block
-    }
-
-    .page {
-      display: none
-    }
-
-    .page.active {
-      display: block
-    }
-
-    .hero-card {
-      padding: var(--space-6);
-      margin-bottom: var(--space-6)
-    }
-
-    .hero-card h2 {
-      margin: 0 0 var(--space-2);
-      font-size: var(--text-xl)
-    }
-
-    .hero-card p {
-      margin: 0;
-      color: var(--color-text-muted);
-      max-width: 72ch
-    }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
-      gap: var(--space-6)
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-3);
-      padding: var(--space-4) var(--space-5);
-      border-bottom: 1px solid var(--color-divider)
-    }
-
-    .panel-body {
-      padding: var(--space-5)
-    }
-
-    .content-shell {
-      min-height: 52dvh;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 96%, white), var(--color-surface));
-      overflow: hidden
-    }
-
-    .video-shell {
-      margin-bottom: var(--space-5)
-    }
-
-    .video-shell video {
-      width: 100%;
-      max-height: 360px;
-      background: #000;
-      border-radius: 14px
-    }
-
-    .slide-article {
-      max-width: 72ch;
-      margin: 0 auto;
-      padding: var(--space-8)
-    }
-
-    .slide-article .content-kicker {
-      display: inline-flex;
-      padding: .2rem .55rem;
-      border-radius: 999px;
-      font-size: var(--text-xs);
-      background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
-      color: var(--color-primary);
-      margin-bottom: var(--space-4)
-    }
-
-    .slide-article h2 {
-      font-size: var(--text-xl);
-      margin: 0 0 var(--space-4)
-    }
-
-    .slide-article .lead {
-      font-size: 1.08rem;
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-6)
-    }
-
-    .slide-article section {
-      margin-top: var(--space-8)
-    }
-
-    .attachments {
-      display: grid;
-      gap: var(--space-3)
-    }
-
-    .attachment-item,
-    .status-card {
-      padding: var(--space-4);
-      border: 1px solid var(--color-divider);
-      border-radius: var(--radius-lg);
-      background: var(--color-surface-2)
-    }
-
-    .question-card {
-      padding: var(--space-4);
-      border: 1px solid var(--color-divider);
-      border-radius: var(--radius-lg);
-      background: var(--color-surface-2);
-      margin-bottom: var(--space-4)
-    }
-
-    .question-card h4 {
-      margin: 0 0 var(--space-2)
-    }
-
-    .question-card p {
-      margin: 0 0 var(--space-3);
-      color: var(--color-text-muted);
-      font-size: var(--text-sm)
-    }
-
-    .options {
-      display: grid;
-      gap: var(--space-2)
-    }
-
-    .option {
-      display: flex;
-      gap: var(--space-3);
-      align-items: flex-start;
-      min-height: 44px;
-      padding: var(--space-3);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      background: var(--color-surface)
-    }
-
-    .field {
-      display: grid;
-      gap: var(--space-2);
-      margin-bottom: var(--space-4)
-    }
-
-    .field label {
-      font-size: var(--text-sm);
-      font-weight: 700
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      min-height: 44px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      padding: 0 var(--space-3);
-      background: var(--color-bg)
-    }
-
-    .field textarea {
-      min-height: 110px;
-      padding: var(--space-3)
-    }
-
-    .help {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted)
-    }
-
-    .alert {
-      padding: var(--space-3) var(--space-4);
-      border-radius: var(--radius-md);
-      margin-bottom: var(--space-4);
-      font-size: var(--text-sm)
-    }
-
-    .alert.error {
-      background: color-mix(in srgb, var(--color-error) 12%, var(--color-surface));
-      color: var(--color-error)
-    }
-
-    .alert.success {
-      background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface));
-      color: var(--color-success)
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-5)
-    }
-
-    .table-wrap {
-      overflow: auto
-    }
-
-    th,
-    td {
-      padding: var(--space-3);
-      text-align: left;
-      border-bottom: 1px solid var(--color-divider);
-      font-size: var(--text-sm)
-    }
-
-    th {
-      color: var(--color-text-muted)
-    }
-
-    .muted {
-      color: var(--color-text-muted)
-    }
-
-    .empty {
-      text-align: center;
-      padding: var(--space-8);
-      color: var(--color-text-muted)
-    }
-
-    .login-screen {
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: var(--space-6)
-    }
-
-    .login-card {
-      width: min(100%, 480px);
-      padding: var(--space-6);
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-md)
-    }
-
-    @media (max-width:1100px) {
-      .app-shell {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr
-      }
-
-      .sidebar {
-        grid-row: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--color-border)
-      }
-
-      .workspace,
-      .grid-2 {
-        grid-template-columns: 1fr
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <a class="skip-link" href="#main-content">Pular para conteúdo</a>
+
+  <!-- Login Screen -->
   <section id="loginView" class="login-screen">
     <div class="login-card">
       <div class="brand">
@@ -585,6 +36,8 @@
       </form>
     </div>
   </section>
+
+  <!-- App View -->
   <section id="appView" class="app-shell hidden">
     <aside class="sidebar">
       <div class="brand">
@@ -615,11 +68,14 @@
         </p>
       </div>
     </aside>
+
     <header class="topbar"><strong id="pageTitle">Treinamento</strong>
       <div class="top-actions"><button class="btn" id="themeToggle">Tema</button><button class="btn"
           id="refreshBtn">Atualizar</button><button class="btn" id="logoutBtn">Sair</button></div>
     </header>
+
     <main class="main" id="main-content">
+      <!-- Dashboard Page -->
       <section id="dashboardPage" class="page active">
         <div class="hero-card">
           <h2>Portal de Treinamentos</h2>
@@ -654,6 +110,8 @@
           </section>
         </div>
       </section>
+
+      <!-- Quiz Page -->
       <section id="quizPage" class="page">
         <div class="hero-card" style="display:grid;grid-template-columns:1fr auto;gap:var(--space-6);align-items:start">
           <div>
@@ -682,6 +140,8 @@
           </div>
         </section>
       </section>
+
+      <!-- Results Page -->
       <section id="resultsPage" class="page">
         <div class="hero-card">
           <h2>Meu histórico</h2>
@@ -689,6 +149,8 @@
         </div>
         <div id="resultsList"></div>
       </section>
+
+      <!-- Admin Page -->
       <section id="adminPage" class="page admin-only hidden">
         <div class="hero-card">
           <h2>Painel administrativo</h2>
@@ -701,6 +163,8 @@
                 data-admin-tab="adminResultadosTab" type="button">Resultados</button></div>
           </div>
         </div>
+
+        <!-- Cadastros Tab -->
         <div id="adminCadastrosTab" class="admin-subtab active">
           <div class="panel" style="margin-bottom:var(--space-6)">
             <div class="panel-body">
@@ -713,6 +177,7 @@
                   data-cadastro-tab="questoesCadastradasTab" type="button">Questões cadastradas</button></div>
             </div>
           </div>
+
           <section id="novoTreinamentoTab" class="cadastro-subtab active panel">
             <div class="panel-header">
               <h3>Novo treinamento</h3>
@@ -728,6 +193,7 @@
               </form>
             </div>
           </section>
+
           <section id="anexoPdfTab" class="cadastro-subtab panel">
             <div class="panel-header">
               <h3>Anexo PDF complementar</h3>
@@ -743,6 +209,7 @@
               </form>
             </div>
           </section>
+
           <section id="novaQuestaoTab" class="cadastro-subtab panel">
             <div class="panel-header">
               <h3>Nova questão vinculada</h3>
@@ -775,6 +242,7 @@
               </form>
             </div>
           </section>
+
           <section id="treinamentosCadastradosTab" class="cadastro-subtab panel">
             <div class="panel-header">
               <h3>Treinamentos cadastrados</h3>
@@ -807,6 +275,7 @@
               </div>
             </div>
           </section>
+
           <section id="questoesCadastradasTab" class="cadastro-subtab panel">
             <div class="panel-header">
               <h3>Questões cadastradas</h3>
@@ -837,6 +306,8 @@
             </div>
           </section>
         </div>
+
+        <!-- Resultados Tab -->
         <div id="adminResultadosTab" class="admin-subtab">
           <div class="panel" style="margin-bottom:var(--space-6)">
             <div class="panel-body">
@@ -848,6 +319,7 @@
                   data-resultado-tab="liberacaoRetakeTab" type="button">Liberação de retake</button></div>
             </div>
           </div>
+
           <section id="filtrosResultadosTab" class="resultado-subtab active panel">
             <div class="panel-header">
               <h3>Filtros de resultados</h3>
@@ -864,6 +336,7 @@
               <p class="help">Exemplo: selecione um treinamento e informe 70 para ver apenas quem tirou até 70%.</p>
             </div>
           </section>
+
           <section id="resultadosFiltradosTab" class="resultado-subtab panel">
             <div class="panel-header">
               <h3>Resultados filtrados</h3><button class="btn btn-primary" id="exportResultsBtn"
@@ -889,6 +362,7 @@
               </table>
             </div>
           </section>
+
           <section id="historicoRetakesTab" class="resultado-subtab panel">
             <div class="panel-header">
               <h3>Histórico de retakes liberados</h3>
@@ -910,6 +384,7 @@
               </table>
             </div>
           </section>
+
           <section id="liberacaoRetakeTab" class="resultado-subtab panel">
             <div class="panel-header">
               <h3>Liberação de retake</h3>
@@ -930,6 +405,7 @@
       </section>
     </main>
   </section>
+
   <!-- Modal de Edição de Treinamento -->
   <div id="editTrainingModal"
     style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.55);backdrop-filter:blur(3px);overflow-y:auto;padding:var(--space-6)">
@@ -960,188 +436,15 @@
       </div>
     </div>
   </div>
-  <script>
-    const state = { user: null, trainings: [], currentTrainingId: null, questions: [], answers: {}, attachments: [], trainingStatus: null, adminUsers: [], adminResults: [] };
-    const el = id => document.getElementById(id);
-    async function api(url, options = {}) { const isFormData = options.body instanceof FormData; const response = await fetch(url, { credentials: 'same-origin', headers: isFormData ? {} : { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options }); if (!response.ok) { const err = await response.json().catch(() => ({ error: 'Erro inesperado' })); throw new Error(err.error || 'Erro na requisição') } return response.json() }
-    function alertBox(target, msg, type = 'error') { target.innerHTML = `<div class="alert ${type}">${msg}</div>` } function clearAlert(target) { target.innerHTML = '' }
-    function switchPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el(pageId).classList.add('active'); document.querySelector(`[data-page-target="${pageId}"]`)?.classList.add('active'); el('pageTitle').textContent = { dashboardPage: 'Treinamento', quizPage: 'Avaliação', resultsPage: 'Meus resultados', adminPage: 'Painel admin' }[pageId] || 'Portal'; if (pageId === 'resultsPage') loadMyResults(); if (pageId === 'adminPage' && state.user?.role === 'admin') loadAdminData() }
-    document.querySelectorAll('[data-page-target]').forEach(btn => btn.addEventListener('click', () => switchPage(btn.dataset.pageTarget)));
-    el('themeToggle').addEventListener('click', () => { const current = document.documentElement.getAttribute('data-theme') || 'light'; document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark') });
-    async function loadSession() { const data = await api('/api/session'); if (data.user) { state.user = data.user; enterApp() } }
-    function enterApp() { el('loginView').classList.add('hidden'); el('appView').classList.remove('hidden'); el('userFullName').textContent = state.user.full_name; el('userRoleChip').textContent = state.user.role === 'admin' ? 'Administrador' : 'Aluno'; document.querySelectorAll('.admin-only').forEach(x => x.classList.toggle('hidden', state.user.role !== 'admin')); loadTrainings(); loadMyResults(); if (state.user.role === 'admin') loadAdminData() }
-    el('loginForm').addEventListener('submit', async e => { e.preventDefault(); clearAlert(el('loginAlert')); const fd = new FormData(e.target); try { const data = await api('/api/login', { method: 'POST', body: JSON.stringify({ username: fd.get('username'), password: fd.get('password') }) }); state.user = data.user; enterApp() } catch (err) { alertBox(el('loginAlert'), err.message) } });
-    el('logoutBtn').addEventListener('click', async () => { await api('/api/logout', { method: 'POST' }); location.reload() });
-    el('refreshBtn').addEventListener('click', async () => { await loadTrainings(); window.syncQuizTrainingSelect?.(); await loadMyResults(); if (state.user?.role === 'admin') await loadAdminData() });
-    document.getElementById('quizTrainingSelect')?.addEventListener('change', async e => { const id = e.target.value; if (!id) { setQuizLocked(true); document.getElementById('quizCurrentTrainingChip').textContent = 'Nenhum'; document.getElementById('quizTrainingDescription').textContent = 'Selecione o curso para ver a avaliação.'; el('quizForm').innerHTML = ''; clearAlert(el('quizAlert')); return; } const cur = state.trainings.find(t => String(t.id) === String(id)); document.getElementById('quizCurrentTrainingChip').textContent = cur ? cur.title : 'Nenhum'; document.getElementById('quizTrainingDescription').textContent = cur ? (cur.description || '') : ''; state.currentTrainingId = Number(id); state.answers = {}; setQuizLocked(false); clearAlert(el('quizAlert')); el('quizForm').innerHTML = ''; await Promise.all([loadQuestions(Number(id)), loadTrainingStatus(Number(id))]); });
-    async function loadTrainings() { const rows = await api('/api/trainings'); state.trainings = rows; const optionsAll = '<option value="">Todos</option>' + rows.map(t => `<option value="${t.id}">${t.title}</option>`).join(''); const opts = rows.map(t => `<option value="${t.id}">${t.title}</option>`).join(''); el('trainingSelect').innerHTML = opts; el('attachmentTrainingSelect').innerHTML = opts; el('questionTrainingSelect').innerHTML = opts; el('retakeTrainingSelect').innerHTML = opts; document.getElementById('videoTrainingSelect').innerHTML = '<option value="">-- Selecione um treinamento --</option>' + opts; el('resultsTrainingFilter').innerHTML = optionsAll; el('questionsTrainingFilter').innerHTML = optionsAll; document.getElementById('quizTrainingSelect') && (document.getElementById('quizTrainingSelect').innerHTML = '<option value="">-- Selecione um treinamento --</option>' + opts); if (rows.length) { const selected = state.currentTrainingId && rows.some(r => String(r.id) === String(state.currentTrainingId)) ? state.currentTrainingId : rows[0].id; await selectTraining(selected); if (document.getElementById('quizTrainingSelect')) { document.getElementById('quizTrainingSelect').value = ''; document.getElementById('quizCurrentTrainingChip').textContent = 'Nenhum'; document.getElementById('quizTrainingDescription').textContent = 'Selecione o curso para ver a avaliação.'; setQuizLocked(true); el('quizForm').innerHTML = ''; } } else { state.currentTrainingId = null; el('trainingContent').innerHTML = '<div class="empty">Nenhum treinamento ativo.</div>'; el('attachmentsList').innerHTML = '<div class="empty">Sem anexos.</div>'; el('quizForm').innerHTML = ''; setQuizLocked(true); } }
-    async function selectTraining(trainingId) { state.currentTrainingId = Number(trainingId); el('trainingSelect').value = String(trainingId); const training = state.trainings.find(t => String(t.id) === String(trainingId)); el('currentTrainingChip').textContent = training?.title || 'Nenhum'; el('trainingDescription').textContent = training?.description || ''; state.answers = {}; clearAlert(el('quizAlert')); await Promise.all([loadAttachments(trainingId), loadTrainingStatus(trainingId)]); renderTrainingContent(training) }
-    function renderTrainingContent(training) { if (!training) { el('trainingContent').innerHTML = '<div class="empty">Sem conteúdo</div>'; return } const video = training.video_path ? `<div class="video-shell"><video controls preload="metadata" playsinline><source src="${training.video_path}" type="video/mp4">Seu navegador não suporta vídeo HTML5.</video></div>` : ''; el('trainingContent').innerHTML = `${video}${training.content_html || '<div class="empty">Sem conteúdo</div>'}` }
-    function setQuizLocked(locked) { const form = el('quizForm'); const btn = el('submitQuizBtn'); if (form) form.querySelectorAll('input,select,textarea,button').forEach(x => x.disabled = locked); if (btn) btn.disabled = locked; el('quizLockInfo').innerHTML = locked ? '<div class="empty">Selecione um treinamento para liberar a avaliação.</div>' : '' }
-    el('trainingSelect').addEventListener('change', () => selectTraining(el('trainingSelect').value));
-    async function loadAttachments(trainingId) { const rows = await api(`/api/trainings/${trainingId}/attachments`); state.attachments = rows; el('attachmentsList').innerHTML = rows.length ? rows.map(a => `<div class="attachment-item"><div><strong>${a.title}</strong><div class="muted">Anexo complementar</div></div><a class="btn" href="${a.file_path}" target="_blank" rel="noopener noreferrer">Abrir PDF</a></div>`).join('') : '<div class="empty">Nenhum anexo complementar para este treinamento.</div>' }
-    async function loadTrainingStatus(trainingId) { const status = await api(`/api/trainings/${trainingId}/status`); state.trainingStatus = status; el('trainingStatusBox').innerHTML = `<strong>Status da avaliação</strong><p class="muted">Tentativas registradas: ${status.attempts}</p><p class="muted">Retakes liberados e ainda não usados: ${status.availableRetakes}</p><p><span class="chip">${status.canAttempt ? 'Pode responder agora' : 'Bloqueado até nova liberação'}</span></p>`; el('submitQuizBtn').disabled = !status.canAttempt; el('quizLockInfo').innerHTML = status.canAttempt ? '' : `<div class="alert error">Você já utilizou a tentativa disponível deste treinamento. Se houver decisão administrativa, o gestor do processo poderá liberar um retake sem apagar seu histórico anterior.</div>` }
-    async function loadQuestions(trainingId) { const rows = await api(`/api/trainings/${trainingId}/questions`); state.questions = rows; el('quizForm').innerHTML = rows.length ? rows.map((q, index) => `<article class="question-card"><h4>${index + 1}. ${q.question_text}</h4>${q.scenario_text ? `<p><strong>Cenário:</strong> ${q.scenario_text}</p>` : ''}<div class="options">${['a', 'b', 'c', 'd'].map(letter => `<label class="option"><input type="radio" name="question_${q.id}" value="${letter.toUpperCase()}" ${state.answers[q.id] === letter.toUpperCase() ? 'checked' : ''} ${state.trainingStatus && !state.trainingStatus.canAttempt ? 'disabled' : ''}/><span><strong>${letter.toUpperCase()}.</strong> ${q['option_' + letter]}</span></label>`).join('')}</div></article>`).join('') : '<div class="empty">Este treinamento ainda não possui questões ativas.</div>'; el('quizForm').querySelectorAll('input[type="radio"]').forEach(input => input.addEventListener('change', () => { const id = input.name.replace('question_', ''); state.answers[id] = input.value })) }
-    el('submitQuizBtn').addEventListener('click', async () => { clearAlert(el('quizAlert')); if (!state.currentTrainingId) { alertBox(el('quizAlert'), 'Selecione um treinamento.'); return } if (state.trainingStatus && !state.trainingStatus.canAttempt) { alertBox(el('quizAlert'), 'Esta avaliação está bloqueada para novas tentativas.'); return } if (!state.questions.length) { alertBox(el('quizAlert'), 'Este treinamento não possui avaliação ativa.'); return } const unanswered = state.questions.filter(q => !state.answers[q.id]); if (unanswered.length) { alertBox(el('quizAlert'), `Existem ${unanswered.length} questão(ões) sem resposta.`); return } try { const result = await api('/api/submit-quiz', { method: 'POST', body: JSON.stringify({ training_id: state.currentTrainingId, answers: state.answers }) }); alertBox(el('quizAlert'), `Avaliação enviada com sucesso. Tentativa ${result.attemptNumber}. Resultado: ${result.score}/${result.total} (${result.percentage}%).`, 'success'); state.answers = {}; await loadQuestions(state.currentTrainingId); await loadTrainingStatus(state.currentTrainingId); await loadMyResults(); if (state.user?.role === 'admin') await loadAdminData() } catch (err) { alertBox(el('quizAlert'), err.message) } });
-    async function loadMyResults() { const rows = await api('/api/my-results'); el('resultsList').innerHTML = rows.length ? rows.map(row => `<article class="result-card" style="padding:1.25rem;margin-bottom:1rem"><div class="toolbar-inline" style="justify-content:space-between"><strong>${row.training_title}</strong><span class="chip">${row.percentage}%</span></div><p><strong>Tentativa:</strong> ${row.attempt_number}</p><p><strong>Tipo:</strong> ${row.access_mode === 'retake' ? 'Retake liberado' : 'Tentativa padrão'}</p><p><strong>Acertos:</strong> ${row.score}/${row.total_questions}</p>${row.grant_note ? `<p><strong>Observação do retake:</strong> ${row.grant_note}</p>` : ''}<p><strong>Finalizado em:</strong> ${new Date(row.finished_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p></article>`).join('') : '<div class="panel empty">Nenhuma tentativa registrada até o momento.</div>' }
-    async function loadAdminData() { await Promise.all([loadAdminUsers(), loadAdminTrainings(), loadAdminQuestions(), loadAdminResults(), loadRetakes()]) }
-    async function loadAdminUsers() { const rows = await api('/api/admin/users'); state.adminUsers = rows; el('retakeUserSelect').innerHTML = rows.map(u => `<option value="${u.id}">${u.full_name} (${u.username})</option>`).join('') }
-    async function loadAdminTrainings() { const rows = await api('/api/admin/trainings'); el('trainingsAdminBody').innerHTML = rows.map(row => `<tr><td>${row.id}</td><td>${row.title}</td><td>${row.video_path ? '<span class="chip">Vídeo</span>' : '—'}</td><td>${row.slug}</td><td>${row.active ? 'Ativo' : 'Inativo'}</td><td><button class="btn" onclick="toggleTraining(${row.id})">${row.active ? 'Desativar' : 'Ativar'}</button></td><td>${row.video_path ? `<button class="btn" style="color:var(--color-error);border-color:var(--color-error)" onclick="removeVideo(${row.id})">Remover vídeo</button>` : '—'}</td><td><button class="btn btn-primary" onclick="openEditTraining(${row.id})">✏️ Editar</button></td></tr>`).join('') || '<tr><td colspan="8">Nenhum treinamento</td></tr>' }
-    async function loadAdminQuestions() { const params = new URLSearchParams(); const t = el('questionsTrainingFilter')?.value; if (t) params.set('training_id', t); const rows = await api('/api/admin/questions' + (params.toString() ? '?' + params.toString() : '')); el('questionsAdminBody').innerHTML = rows.length ? rows.map(row => `<tr><td>${row.id}</td><td>${row.training_title}</td><td>${row.category}</td><td>${row.question_text}</td><td>${row.correct_option}</td><td>${row.active ? 'Ativa' : 'Inativa'}</td><td><button class="btn" onclick="toggleQuestion(${row.id})">${row.active ? 'Desativar' : 'Ativar'}</button></td></tr>`).join('') : '<tr><td colspan="7">Nenhuma questão para o filtro informado</td></tr>' }
-    async function loadAdminResults() { const params = new URLSearchParams(); const t = el('resultsTrainingFilter').value; const max = el('resultsMaxPctFilter').value; if (t) params.set('training_id', t); if (max !== '') params.set('max_percentage', max); const rows = await api('/api/admin/results' + (params.toString() ? '?' + params.toString() : '')); state.adminResults = rows; el('adminResultsBody').innerHTML = rows.length ? rows.map(row => `<tr><td>${row.id}</td><td>${row.full_name}</td><td>${row.training_title}</td><td>${row.attempt_number}</td><td>${row.access_mode === 'retake' ? 'Retake' : 'Padrão'}</td><td>${new Date(row.finished_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</td><td>${row.score}/${row.total_questions}</td><td>${row.percentage}%</td><td>${row.grant_note || ''}</td></tr>`).join('') : '<tr><td colspan="9">Nenhum resultado para o filtro informado</td></tr>' }
-    async function loadRetakes() { const rows = await api('/api/admin/retakes'); el('retakesAdminBody').innerHTML = rows.length ? rows.map(row => `<tr><td>${row.id}</td><td>${row.full_name}</td><td>${row.training_title}</td><td>${row.status}</td><td>${new Date(row.created_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</td><td>${row.consumed_at ? new Date(row.consumed_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : ''}</td><td>${row.note || ''}</td></tr>`).join('') : '<tr><td colspan="7">Nenhum retake liberado</td></tr>' }
-    window.toggleTraining = async id => { await api(`/api/admin/trainings/${id}/toggle`, { method: 'POST' }); await loadAdminData(); await loadTrainings() }
-    window.removeVideo = async id => {
-      if (!confirm('Tem certeza que deseja remover o vídeo deste treinamento?')) return;
-      try {
-        await api(`/api/admin/trainings/${id}/video`, { method: 'DELETE' });
-        await loadAdminTrainings();
-        await loadTrainings(); window.syncQuizTrainingSelect?.();
-        alert('Vídeo removido com sucesso!');
-      } catch (err) { alert(err.message); }
-    }
-    window.toggleQuestion = async id => { await api(`/api/admin/questions/${id}/toggle`, { method: 'POST' }); await loadAdminData(); if (state.currentTrainingId) await Promise.all([loadQuestions(state.currentTrainingId), loadTrainingStatus(state.currentTrainingId)]); window.syncQuizTrainingSelect?.() }
-    document.getElementById('applyQuestionsFilterBtn').addEventListener('click', loadAdminQuestions); document.getElementById('applyResultsFilterBtn').addEventListener('click', loadAdminResults); document.getElementById('videoUploadInput').addEventListener('change', async e => {
-      const file = e.target.files[0];
-      const trainingId = document.getElementById('videoTrainingSelect').value;
-      if (!file) { return; }
-      if (!trainingId) { alert('Selecione um treinamento antes de escolher o vídeo.'); e.target.value = ''; return; }
-      const fd = new FormData();
-      fd.append('video_file', file);
-      try {
-        await api(`/api/admin/trainings/${trainingId}/video`, { method: 'POST', body: fd });
-        await loadAdminTrainings();
-        await loadTrainings(); window.syncQuizTrainingSelect?.();
-        alertBox(document.getElementById('trainingAlert'), 'Vídeo enviado com sucesso para o treinamento selecionado!', 'success');
-        e.target.value = '';
-        document.getElementById('videoTrainingSelect').value = '';
-      } catch (err) { alert(err.message); }
-    });
-    function setupSubtabs(buttonSelector, panelSelector, dataAttr) { document.querySelectorAll(buttonSelector).forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll(buttonSelector).forEach(b => b.classList.remove('active')); document.querySelectorAll(panelSelector).forEach(p => p.classList.remove('active')); btn.classList.add('active'); const target = btn.dataset[dataAttr]; document.getElementById(target)?.classList.add('active') })) }
-    setupSubtabs('[data-admin-tab]', '.admin-subtab', 'adminTab'); setupSubtabs('[data-cadastro-tab]', '.cadastro-subtab', 'cadastroTab'); setupSubtabs('[data-resultado-tab]', '.resultado-subtab', 'resultadoTab');
 
-    // ── Cadastro: Novo Treinamento ──
-    el('trainingForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      clearAlert(el('trainingAlert'));
-      const fd = new FormData(e.target);
-      const data = Object.fromEntries(fd);
-      try {
-        const result = await api('/api/admin/trainings', { method: 'POST', body: JSON.stringify(data) });
-        alertBox(el('trainingAlert'), `Treinamento criado com sucesso! ID: ${result.id}`, 'success');
-        e.target.reset();
-        await loadTrainings(); window.syncQuizTrainingSelect?.();
-        await loadAdminTrainings();
-      } catch (err) { alertBox(el('trainingAlert'), err.message); }
-    });
-
-    // ── Cadastro: Novo Anexo PDF ──
-    el('attachmentForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      clearAlert(el('attachmentAlert'));
-      const fd = new FormData(e.target);
-      try {
-        await api(`/api/admin/trainings/${fd.get('training_id')}/attachments`, { method: 'POST', body: fd });
-        alertBox(el('attachmentAlert'), 'Anexo enviado com sucesso!', 'success');
-        e.target.reset();
-      } catch (err) { alertBox(el('attachmentAlert'), err.message); }
-    });
-
-    // ── Cadastro: Nova Questão ──
-    el('questionForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      clearAlert(el('questionAlert'));
-      const fd = new FormData(e.target);
-      const data = Object.fromEntries(fd);
-      try {
-        await api('/api/admin/questions', { method: 'POST', body: JSON.stringify(data) });
-        alertBox(el('questionAlert'), 'Questão cadastrada com sucesso!', 'success');
-        e.target.reset();
-        await loadAdminQuestions();
-      } catch (err) { alertBox(el('questionAlert'), err.message); }
-    });
-
-    // ── Cadastro: Liberar Retake ──
-    el('retakeForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      clearAlert(el('retakeAlert'));
-      const fd = new FormData(e.target);
-      const data = Object.fromEntries(fd);
-      try {
-        await api('/api/admin/retakes', { method: 'POST', body: JSON.stringify(data) });
-        alertBox(el('retakeAlert'), 'Retake liberado com sucesso!', 'success');
-        e.target.reset();
-        await loadRetakes();
-      } catch (err) { alertBox(el('retakeAlert'), err.message); }
-    });
-
-    // ── Modal: Editar Treinamento ──
-    window.openEditTraining = async (id) => {
-      clearAlert(el('editTrainingAlert'));
-      try {
-        const t = await api(`/api/admin/trainings/${id}`);
-        el('editTrainingId').value = t.id;
-        el('editTitle').value = t.title;
-        el('editSlug').value = t.slug;
-        el('editDescription').value = t.description || '';
-        el('editContentHtml').value = t.content_html;
-        el('editTrainingModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-      } catch (err) { alert(err.message); }
-    };
-
-    window.closeEditTraining = () => {
-      el('editTrainingModal').style.display = 'none';
-      document.body.style.overflow = '';
-      clearAlert(el('editTrainingAlert'));
-    };
-
-    el('editTrainingModal').addEventListener('click', e => {
-      if (e.target === el('editTrainingModal')) closeEditTraining();
-    });
-
-    el('editTrainingForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      clearAlert(el('editTrainingAlert'));
-      const id = el('editTrainingId').value;
-      const data = {
-        title: el('editTitle').value,
-        slug: el('editSlug').value,
-        description: el('editDescription').value,
-        content_html: el('editContentHtml').value,
-      };
-      try {
-        await api(`/api/admin/trainings/${id}`, { method: 'PUT', body: JSON.stringify(data) });
-        alertBox(el('editTrainingAlert'), 'Treinamento atualizado com sucesso!', 'success');
-        await loadTrainings(); window.syncQuizTrainingSelect?.();
-        await loadAdminTrainings();
-        setTimeout(closeEditTraining, 1500);
-      } catch (err) { alertBox(el('editTrainingAlert'), err.message); }
-    });
-
-    // ── Exportar Resultados para Excel ──
-    window.exportResultsToExcel = () => {
-      const rows = state.adminResults;
-      if (!rows || !rows.length) { alert('Nenhum resultado para exportar. Aplique um filtro primeiro.'); return; }
-      const headers = ['ID', 'Colaborador', 'Treinamento', 'Tentativa', 'Tipo', 'Data', 'Acertos', 'Total', '%', 'Observação'];
-      const data = rows.map(r => [r.id, r.full_name, r.training_title, r.attempt_number, r.access_mode === 'retake' ? 'Retake' : 'Padrão', new Date(r.finished_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }), r.score, r.total_questions, r.percentage + '%', r.grant_note || '']);
-      const BOM = '\uFEFF';
-      const escape = v => { const s = String(v); return s.includes(';') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s; };
-      const csv = BOM + [headers, ...data].map(row => row.map(escape).join(';')).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      const filtroTreinamento = el('resultsTrainingFilter').options[el('resultsTrainingFilter').selectedIndex]?.text || 'todos';
-      const dataHoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).replace(/\//g, '-');
-      a.href = url;
-      a.download = `resultados_${filtroTreinamento}_${dataHoje}.csv`;
-      a.click();
-      URL.revokeObjectURL(url);
-    };
-
-    loadSession().catch(() => { }); window.syncQuizTrainingSelect?.(); setQuizLocked(true); document.getElementById('quizTrainingSelect') && (document.getElementById('quizTrainingSelect').value = ''); document.getElementById('quizCurrentTrainingChip') && (document.getElementById('quizCurrentTrainingChip').textContent = 'Nenhum'); document.getElementById('quizTrainingDescription') && (document.getElementById('quizTrainingDescription').textContent = 'Selecione o curso para ver a avaliação.'); el('quizForm').innerHTML = '';
-  </script>
-
+  <!-- Scripts -->
+  <script src="state.js"></script>
+  <script src="utils.js"></script>
+  <script src="ui.js"></script>
+  <script src="training.js"></script>
+  <script src="quiz.js"></script>
+  <script src="admin.js"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>
