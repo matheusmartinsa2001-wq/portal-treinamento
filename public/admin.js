@@ -4,6 +4,7 @@ async function loadAdminData() {
     loadAdminTrainings(),
     loadAdminQuestions(),
     loadAdminResults(),
+    loadAdminOverview(),
     loadRetakes()
   ]);
 }
@@ -16,6 +17,7 @@ async function loadAdminUsers() {
 
 async function loadAdminTrainings() {
   const rows = await api('/api/admin/trainings');
+  state.adminTrainings = rows;
   el('trainingsAdminBody').innerHTML = rows.map(row => `<tr><td>${row.id}</td><td>${row.title}</td><td>${row.video_path ? '<span class="chip">Vídeo</span>' : '—'}</td><td>${row.slug}</td><td>${row.active ? 'Ativo' : 'Inativo'}</td><td><button class="btn" onclick="toggleTraining(${row.id})">${row.active ? 'Desativar' : 'Ativar'}</button></td><td>${row.video_path ? `<button class="btn" style="color:var(--color-error);border-color:var(--color-error)" onclick="removeVideo(${row.id})">Remover vídeo</button>` : '—'}</td><td><button class="btn btn-primary" onclick="openEditTraining(${row.id})">✏️ Editar</button></td></tr>`).join('') || '<tr><td colspan="8">Nenhum treinamento</td></tr>';
 }
 
@@ -47,6 +49,24 @@ async function loadRetakes() {
   el('retakesAdminBody').innerHTML = rows.length
     ? rows.map(row => `<tr><td>${row.id}</td><td>${row.full_name}</td><td>${row.training_title}</td><td>${row.status}</td><td>${new Date(row.created_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</td><td>${row.consumed_at ? new Date(row.consumed_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : ''}</td><td>${row.note || ''}</td></tr>`).join('')
     : '<tr><td colspan="7">Nenhum retake liberado</td></tr>';
+}
+
+async function loadAdminOverview() {
+  const rows = await api('/api/admin/overview');
+  const trainings = state.adminTrainings || [];
+  el('overviewTrainingFilter').innerHTML = '<option value="">Todos os treinamentos</option>' + trainings.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
+  el('overviewBody').innerHTML = rows.length
+    ? rows.map(r => `<tr><td>${r.full_name}</td><td>${r.training_title}</td><td>${r.deadline ? new Date(r.deadline + 'T00:00:00').toLocaleDateString('pt-BR') : '—'}</td><td>${r.completed ? '<span style="color:var(--success)">✔ Feito</span>' : '<span style="color:var(--danger)">✘ Pendente</span>'}</td></tr>`).join('')
+    : '<tr><td colspan="4">Nenhum dado encontrado</td></tr>';
+}
+
+async function loadOverviewFiltered() {
+  const t = el('overviewTrainingFilter').value;
+  const params = t ? '?training_id=' + t : '';
+  const rows = await api('/api/admin/overview' + params);
+  el('overviewBody').innerHTML = rows.length
+    ? rows.map(r => `<tr><td>${r.full_name}</td><td>${r.training_title}</td><td>${r.deadline ? new Date(r.deadline + 'T00:00:00').toLocaleDateString('pt-BR') : '—'}</td><td>${r.completed ? '<span style="color:var(--success)">✔ Feito</span>' : '<span style="color:var(--danger)">✘ Pendente</span>'}</td></tr>`).join('')
+    : '<tr><td colspan="4">Nenhum dado encontrado</td></tr>';
 }
 
 window.toggleTraining = async id => {

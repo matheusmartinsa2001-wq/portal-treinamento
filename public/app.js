@@ -219,6 +219,7 @@ function setupEventListeners() {
 
   document.getElementById('applyQuestionsFilterBtn').addEventListener('click', loadAdminQuestions);
   document.getElementById('applyResultsFilterBtn').addEventListener('click', loadAdminResults);
+  document.getElementById('applyOverviewFilterBtn').addEventListener('click', loadOverviewFiltered);
 
   setupTrainingForm();
   setupAttachmentForm();

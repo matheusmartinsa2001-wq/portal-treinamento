@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS retake_grants (
 
 const cols = db.prepare('PRAGMA table_info(trainings)').all().map(c => c.name);
 if (!cols.includes('video_path')) db.exec('ALTER TABLE trainings ADD COLUMN video_path TEXT');
+if (!cols.includes('deadline')) db.exec('ALTER TABLE trainings ADD COLUMN deadline TEXT');
 
 const userCount = db.prepare('SELECT COUNT(*) AS count FROM users').get().count;
 if (userCount === 0) { const stmt = db.prepare('INSERT INTO users (username, password, full_name, role) VALUES (?, ?, ?, ?)'); [['admin','admin123','Administrador ITSM','admin'],['aluno1','treinamento123','Aluno Exemplo 1','student'],['aluno2','treinamento123','Aluno Exemplo 2','student']].forEach(u=>stmt.run(...u)); }
@@ -139,7 +140,7 @@ app.get('/api/my-results', requireAuth, (req, res) => { res.json(db.prepare(`SEL
 
 app.get('/api/admin/users', requireAdmin, (req, res) => res.json(db.prepare("SELECT id, username, full_name FROM users WHERE role = 'student' ORDER BY full_name ASC").all()));
 app.get('/api/admin/trainings', requireAdmin, (req, res) => res.json(db.prepare('SELECT id, title, slug, description, video_path, active, created_at FROM trainings ORDER BY id DESC').all()));
-app.post('/api/admin/trainings', requireAdmin, (req, res) => { const { title, slug, description, content_html } = req.body; if (!title || !slug || !content_html) return res.status(400).json({ error: 'Título, slug e conteúdo HTML são obrigatórios' }); try { const info = db.prepare('INSERT INTO trainings (title, slug, description, content_html, active) VALUES (?, ?, ?, ?, 1)').run(title, slug, description || '', content_html); res.json({ ok: true, id: info.lastInsertRowid }); } catch (e) { res.status(400).json({ error: 'Slug já existe ou dados inválidos' }); } });
+app.post('/api/admin/trainings', requireAdmin, (req, res) => { const { title, slug, description, content_html, deadline } = req.body; if (!title || !slug || !content_html) return res.status(400).json({ error: 'Título, slug e conteúdo HTML são obrigatórios' }); try { const info = db.prepare('INSERT INTO trainings (title, slug, description, content_html, active, deadline) VALUES (?, ?, ?, ?, 1, ?)').run(title, slug, description || '', content_html, deadline || null); res.json({ ok: true, id: info.lastInsertRowid }); } catch (e) { res.status(400).json({ error: 'Slug já existe ou dados inválidos' }); } });
 app.post('/api/admin/trainings/:id/toggle', requireAdmin, (req, res) => { const id = Number(req.params.id); const row = db.prepare('SELECT active FROM trainings WHERE id = ?').get(id); if (!row) return res.status(404).json({ error: 'Treinamento não encontrado' }); db.prepare('UPDATE trainings SET active = ? WHERE id = ?').run(row.active ? 0 : 1, id); res.json({ ok: true }); });
 
 app.get('/api/admin/trainings/:id', requireAdmin, (req, res) => {
@@ -178,5 +179,25 @@ app.post('/api/admin/questions/:id/toggle', requireAdmin, (req, res) => { const 
 app.get('/api/admin/results', requireAdmin, (req, res) => { const trainingId = Number(req.query.training_id || 0); const maxPctRaw = req.query.max_percentage; let sql = `SELECT qa.id, qa.attempt_number, qa.access_mode, qa.grant_note, u.id AS user_id, u.username, u.full_name, t.id AS training_id, t.title AS training_title, qa.finished_at, qa.score, qa.total_questions, qa.percentage FROM quiz_attempts qa JOIN users u ON u.id = qa.user_id JOIN trainings t ON t.id = qa.training_id WHERE 1=1`; const params = []; if (trainingId) { sql += ' AND t.id = ?'; params.push(trainingId); } if (maxPctRaw !== undefined && maxPctRaw !== '') { sql += ' AND qa.percentage <= ?'; params.push(Number(maxPctRaw)); } sql += ' ORDER BY t.title ASC, qa.percentage ASC, qa.finished_at DESC'; res.json(db.prepare(sql).all(...params)); });
 app.post('/api/admin/retakes', requireAdmin, (req, res) => { const { user_id, training_id, note } = req.body; if (!user_id || !training_id) return res.status(400).json({ error: 'Usuário e treinamento são obrigatórios' }); const existing = db.prepare("SELECT COUNT(*) AS total FROM retake_grants WHERE user_id = ? AND training_id = ? AND status = 'available'").get(Number(user_id), Number(training_id)).total; if (existing > 0) return res.status(400).json({ error: 'Já existe uma liberação de retake pendente para este usuário neste treinamento' }); const info = db.prepare("INSERT INTO retake_grants (user_id, training_id, granted_by_user_id, note, status, created_at) VALUES (?, ?, ?, ?, ?, datetime('now','-3 hours'))").run(Number(user_id), Number(training_id), req.session.user.id, note || '', 'available'); res.json({ ok: true, id: info.lastInsertRowid }); });
 app.get('/api/admin/retakes', requireAdmin, (req, res) => { const rows = db.prepare(`SELECT rg.id, rg.status, rg.note, rg.created_at, rg.consumed_at, u.full_name, u.username, t.title AS training_title FROM retake_grants rg JOIN users u ON u.id = rg.user_id JOIN trainings t ON t.id = rg.training_id ORDER BY rg.id DESC`).all(); res.json(rows); });
+app.get('/api/admin/overview', requireAdmin, (req, res) => {
+  const trainingId = Number(req.query.training_id || 0);
+  let sql = `
+    SELECT
+      u.id AS user_id,
+      u.full_name,
+      u.username,
+      t.id AS training_id,
+      t.title AS training_title,
+      t.deadline,
+      CASE WHEN COUNT(qa.id) > 0 THEN 1 ELSE 0 END AS completed
+    FROM users u
+    CROSS JOIN trainings t
+    LEFT JOIN quiz_attempts qa ON qa.user_id = u.id AND qa.training_id = t.id
+    WHERE u.role != 'admin' AND t.active = 1`;
+  const params = [];
+  if (trainingId) { sql += ' AND t.id = ?'; params.push(trainingId); }
+  sql += ' GROUP BY u.id, t.id ORDER BY u.full_name ASC, t.title ASC';
+  res.json(db.prepare(sql).all(...params));
+});
 app.get('*', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'training-portal.html')));
 app.listen(PORT, () => console.log(`ITSM portal v3.3 running on http://localhost:${PORT}`));

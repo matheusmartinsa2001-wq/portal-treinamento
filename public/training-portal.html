@@ -189,7 +189,8 @@
                 <div class="field"><label>Slug</label><input name="slug" required></div>
                 <div class="field"><label>Descrição curta</label><textarea name="description"></textarea></div>
                 <div class="field"><label>Conteúdo HTML do treinamento</label><textarea name="content_html"
-                    required></textarea></div><button class="btn btn-primary" type="submit">Salvar treinamento</button>
+                    required></textarea></div>
+                <div class="field"><label>Data limite de realização</label><input type="date" name="deadline" id="trainingDeadline"></div><button class="btn btn-primary" type="submit">Salvar treinamento</button>
               </form>
             </div>
           </section>
@@ -312,6 +313,7 @@
           <div class="panel" style="margin-bottom:var(--space-6)">
             <div class="panel-body">
               <div class="subtabs" role="tablist" aria-label="Sub abas de resultados"><button class="subtab-btn active"
+                  data-resultado-tab="visaoGeralTab" type="button">Visão geral</button><button class="subtab-btn"
                   data-resultado-tab="filtrosResultadosTab" type="button">Filtros de resultados</button><button
                   class="subtab-btn" data-resultado-tab="resultadosFiltradosTab" type="button">Resultados
                   filtrados</button><button class="subtab-btn" data-resultado-tab="historicoRetakesTab"
@@ -320,7 +322,36 @@
             </div>
           </div>
 
-          <section id="filtrosResultadosTab" class="resultado-subtab active panel">
+          <section id="visaoGeralTab" class="resultado-subtab active panel">
+            <div class="panel-header">
+              <h3>Visão geral</h3>
+            </div>
+            <div class="panel-body">
+              <div class="filter-row">
+                <div class="field" style="min-width:220px;flex:1"><label>Treinamento</label><select
+                    id="overviewTrainingFilter"></select></div>
+                <div class="field" style="align-self:end"><button class="btn btn-primary" id="applyOverviewFilterBtn"
+                    type="button">Filtrar</button></div>
+              </div>
+              <div class="table-wrap" style="margin-top:var(--space-4)">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Colaborador</th>
+                      <th>Treinamento</th>
+                      <th>Data Limite</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewBody">
+                    <tr><td colspan="4">Carregando...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section id="filtrosResultadosTab" class="resultado-subtab panel">
             <div class="panel-header">
               <h3>Filtros de resultados</h3>
             </div>
