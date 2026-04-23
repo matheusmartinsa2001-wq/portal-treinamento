@@ -61,6 +61,7 @@ function openEditTraining(id) {
       el('editSlug').value = t.slug;
       el('editDescription').value = t.description || '';
       el('editContentHtml').value = t.content_html;
+      el('editDeadline').value = t.deadline || '';
       el('editTrainingModal').style.display = 'block';
       document.body.style.overflow = 'hidden';
     })

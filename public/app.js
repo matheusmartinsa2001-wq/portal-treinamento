@@ -147,7 +147,8 @@ function setupEditTrainingForm() {
       title: el('editTitle').value,
       slug: el('editSlug').value,
       description: el('editDescription').value,
-      content_html: el('editContentHtml').value
+      content_html: el('editContentHtml').value,
+      deadline: el('editDeadline').value || null
     };
     try {
       await api(`/api/admin/trainings/${id}`, {

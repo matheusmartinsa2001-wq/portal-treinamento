@@ -152,12 +152,12 @@ app.get('/api/admin/trainings/:id', requireAdmin, (req, res) => {
 
 app.put('/api/admin/trainings/:id', requireAdmin, (req, res) => {
   const id = Number(req.params.id);
-  const { title, slug, description, content_html } = req.body;
+  const { title, slug, description, content_html, deadline } = req.body;
   if (!title || !slug || !content_html) return res.status(400).json({ error: 'Título, slug e conteúdo HTML são obrigatórios' });
   const row = db.prepare('SELECT id FROM trainings WHERE id = ?').get(id);
   if (!row) return res.status(404).json({ error: 'Treinamento não encontrado' });
   try {
-    db.prepare('UPDATE trainings SET title = ?, slug = ?, description = ?, content_html = ? WHERE id = ?').run(title, slug, description || '', content_html, id);
+    db.prepare('UPDATE trainings SET title = ?, slug = ?, description = ?, content_html = ?, deadline = ? WHERE id = ?').run(title, slug, description || '', content_html, deadline || null, id);
     res.json({ ok: true });
   } catch (e) { res.status(400).json({ error: 'Slug já existe ou dados inválidos' }); }
 });
