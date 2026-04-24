@@ -121,3 +121,37 @@ window.exportResultsToExcel = () => {
   a.click();
   URL.revokeObjectURL(url);
 };
+
+window.exportOverviewToExcel = () => {
+  const rows = Array.from(document.querySelectorAll('#overviewBody tr')).map(tr => {
+    const cells = tr.querySelectorAll('td');
+    if (!cells.length) return null;
+    return [
+      cells[0]?.textContent.trim(),
+      cells[1]?.textContent.trim(),
+      cells[2]?.textContent.trim(),
+      cells[3]?.textContent.trim()
+    ];
+  }).filter(Boolean);
+
+  if (!rows.length) {
+    alert('Nenhum dado para exportar.');
+    return;
+  }
+
+  const headers = ['Colaborador', 'Treinamento', 'Data Limite', 'Status'];
+  const BOM = '\uFEFF';
+  const escape = v => {
+    const s = String(v);
+    return s.includes(';') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const csv = BOM + [headers, ...rows].map(row => row.map(escape).join(';')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dataHoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).replace(/\//g, '-');
+  a.href = url;
+  a.download = `visao_geral_${dataHoje}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
