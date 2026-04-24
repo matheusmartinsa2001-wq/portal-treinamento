@@ -2,7 +2,7 @@ async function loadQuestions(trainingId) {
   const rows = await api(`/api/trainings/${trainingId}/questions`);
   state.questions = rows;
   el('quizForm').innerHTML = rows.length
-    ? rows.map((q, index) => `<article class="question-card"><h4>${index + 1}. ${q.question_text}</h4>${q.scenario_text ? `<p><strong>Cenário:</strong> ${q.scenario_text}</p>` : ''}<div class="options">${['a', 'b', 'c', 'd'].map(letter => `<label class="option"><input type="radio" name="question_${q.id}" value="${letter.toUpperCase()}" ${state.answers[q.id] === letter.toUpperCase() ? 'checked' : ''} ${state.trainingStatus && !state.trainingStatus.canAttempt ? 'disabled' : ''}/><span><strong>${letter.toUpperCase()}.</strong> ${q['option_' + letter]}</span></label>`).join('')}</div></article>`).join('')
+    ? rows.map((q, index) => `<article class="question-card"><h4>${index + 1}. ${q.question_text}</h4>${q.scenario_text ? `<p><strong>Cenário:</strong> ${q.scenario_text}</p>` : ''}<div class="options">${['a', 'b', 'c', 'd'].map(letter => `<label class="option"><input type="radio" name="question_${q.id}" value="${letter.toUpperCase()}" ${state.answers[q.id] === letter.toUpperCase() ? 'checked' : ''}/><span><strong>${letter.toUpperCase()}.</strong> ${q['option_' + letter]}</span></label>`).join('')}</div></article>`).join('')
     : '<div class="empty">Este treinamento ainda não possui questões ativas.</div>';
 
   el('quizForm').querySelectorAll('input[type="radio"]').forEach(input => {
