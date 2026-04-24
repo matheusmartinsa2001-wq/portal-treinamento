@@ -9,13 +9,13 @@ async function loadTrainings() {
   el('attachmentTrainingSelect').innerHTML = opts;
   el('questionTrainingSelect').innerHTML = opts;
   el('retakeTrainingSelect').innerHTML = opts;
-  document.getElementById('videoTrainingSelect').innerHTML = '<option value="">-- Selecione um treinamento --</option>' + opts;
+  document.getElementById('videoTrainingSelect').innerHTML = '<option value="">Selecione um treinamento</option>' + opts;
   el('resultsTrainingFilter').innerHTML = optionsAll;
   el('questionsTrainingFilter').innerHTML = optionsAll;
 
   const quizSelect = document.getElementById('quizTrainingSelect');
   if (quizSelect) {
-    quizSelect.innerHTML = '<option value="">-- Selecione um treinamento --</option>' + opts;
+    quizSelect.innerHTML = '<option value="">Selecione um treinamento</option>' + opts;
   }
 
   if (rows.length) {
