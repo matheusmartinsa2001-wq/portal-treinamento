@@ -316,7 +316,7 @@ table {
 .hero-card p {
   margin: 0;
   color: var(--color-text-muted);
-  max-width: 72ch
+  
 }
 
 .workspace {
