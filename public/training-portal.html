@@ -313,8 +313,7 @@
           <div class="panel" style="margin-bottom:var(--space-6)">
             <div class="panel-body">
               <div class="subtabs" role="tablist" aria-label="Sub abas de resultados"><button class="subtab-btn active"
-                  data-resultado-tab="visaoGeralTab" type="button">Visão geral</button><button class="subtab-btn"
-                  data-resultado-tab="filtrosResultadosTab" type="button">Filtros de resultados</button><button
+                  data-resultado-tab="visaoGeralTab" type="button">Visão geral</button><button
                   class="subtab-btn" data-resultado-tab="resultadosFiltradosTab" type="button">Resultados
                   filtrados</button><button class="subtab-btn" data-resultado-tab="historicoRetakesTab"
                   type="button">Histórico de retakes liberados</button><button class="subtab-btn"
@@ -352,30 +351,35 @@
             </div>
           </section>
 
-          <section id="filtrosResultadosTab" class="resultado-subtab panel">
-            <div class="panel-header">
-              <h3>Filtros de resultados</h3>
-            </div>
-            <div class="panel-body">
-              <div class="filter-row">
-                <div class="field" style="min-width:220px;flex:1"><label>Treinamento</label><select
-                    id="resultsTrainingFilter"></select></div>
-                <div class="field" style="min-width:180px"><label>Percentual máximo</label><input
-                    id="resultsMaxPctFilter" type="number" min="0" max="100" step="0.01" placeholder="70"></div>
-                <div class="field" style="align-self:end"><button class="btn btn-primary" id="applyResultsFilterBtn"
-                    type="button">Aplicar filtro</button></div>
-              </div>
-              <p class="help">Exemplo: selecione um treinamento e informe 70 para ver apenas quem tirou até 70%.</p>
-            </div>
-          </section>
+          
 
           <section id="resultadosFiltradosTab" class="resultado-subtab panel">
             <div class="panel-header">
-              <h3>Resultados filtrados</h3><button class="btn btn-primary" id="exportResultsBtn"
-                onclick="exportResultsToExcel()" style="display:flex;align-items:center;gap:.4rem">📥 Exportar
-                Excel</button>
+              <h3>Filtrar Resultados</h3>
+              <button class="btn btn-primary" id="exportResultsBtn" onclick="exportResultsToExcel()"
+                style="display:flex;align-items:center;gap:.4rem">📥 Exportar Excel</button>
             </div>
             <div class="panel-body table-wrap">
+          
+              <!-- Filtros movidos para cá -->
+              <div class="filter-row" style="margin-bottom:var(--space-4)">
+                <div class="field" style="min-width:220px;flex:1">
+                  <label>Treinamento</label>
+                  <select id="resultsTrainingFilter"></select>
+                </div>
+                <div class="field" style="min-width:180px">
+                  <label>Percentual máximo</label>
+                  <input id="resultsMaxPctFilter" type="number" min="0" max="100" step="0.01" placeholder="70">
+                </div>
+                <div class="field" style="align-self:end">
+                  <button class="btn btn-primary" id="applyResultsFilterBtn" type="button">Aplicar filtro</button>
+                </div>
+              </div>
+              <p class="help" style="margin-bottom:var(--space-4)">
+                Exemplo: selecione um treinamento e informe 70 para ver apenas quem tirou até 70%.
+              </p>
+          
+              <!-- Tabela existente -->
               <table>
                 <thead>
                   <tr>
