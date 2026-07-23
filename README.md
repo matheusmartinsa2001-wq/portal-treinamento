@@ -2,8 +2,8 @@
 
 Versão com vídeo interno no topo do treinamento, conteúdo HTML abaixo, anexos PDF complementares e avaliação por treinamento.
 
-## Instalação
-
+## Instalaçãoo
+ 
 ```bash
 npm install
 npm start
